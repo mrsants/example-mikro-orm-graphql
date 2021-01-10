@@ -4,6 +4,7 @@ import { Options } from "@mikro-orm/core";
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 
 dotenv.config();
+
 export default {
   migrations: {
     path: './migrations', // path to the folder with migrations

@@ -5,6 +5,11 @@ import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import { HelloResolver } from "../resolvers/hello";
 import { PostsResolver } from "../resolvers/posts";
+import dotenv from 'dotenv';
+
+import "reflect-metadata";
+
+dotenv.config();
 
 const main = async () => {
   const orm = await MikroORM.init(mikroConfig);
@@ -24,7 +29,7 @@ const main = async () => {
     res.send("hello");
   });
 
-  app.listen(4000, () => {
+  app.listen(process.env.APP_PORT, () => {
     console.log("server started on localhost:4000");
   });
 };
