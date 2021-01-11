@@ -6,7 +6,6 @@ import { buildSchema } from "type-graphql";
 import { HelloResolver } from "../resolvers/hello";
 import { PostsResolver } from "../resolvers/posts";
 import dotenv from 'dotenv';
-
 import "reflect-metadata";
 
 dotenv.config();
@@ -25,8 +24,9 @@ const main = async () => {
   });
 
   apolloServer.applyMiddleware({ app });
+
   app.get("/", (_, res) => {
-    res.send("hello");
+    res.send("giselle");
   });
 
   app.listen(process.env.APP_PORT, () => {
