@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import { Post } from "./entities/Post";
 import { Options } from "@mikro-orm/core";
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
+import { User } from './entities/User';
 
 dotenv.config();
 
@@ -10,7 +11,7 @@ export default {
     path: './migrations', // path to the folder with migrations
     pattern: /^[\w-]+\d+\.ts$/, // regex pattern for the migration files
   },
-  entities: [Post],
+  entities: [Post, User],
   dbName: process.env.DB_NAME,
   host: process.env.DB_HOST,
   type: process.env.DB_TYPE,
