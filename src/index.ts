@@ -11,6 +11,7 @@ import { UserResolver } from "../resolvers/user";
 import redis from "redis";
 import connectRedis from "connect-redis";
 import session from "express-session";
+import { __prod__ } from "./constant";
 
 dotenv.config();
 
@@ -26,7 +27,7 @@ const main = async () => {
 
   app.use(
     session({
-      name: 'qid',
+      name: "qid",
       store: new RedisStore({
         client: redisClient,
         disableTTL: true,
@@ -35,7 +36,7 @@ const main = async () => {
       cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
         httpOnly: true,
-        secure: true,
+        secure: __prod__,
       },
       secret: "alksjaisuanshsaidatslkasmssak",
       resave: false,

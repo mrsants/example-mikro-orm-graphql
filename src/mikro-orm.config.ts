@@ -3,6 +3,7 @@ import { Post } from "./entities/Post";
 import { Options } from "@mikro-orm/core";
 import { TsMorphMetadataProvider } from '@mikro-orm/reflection';
 import { User } from './entities/User';
+import { __prod__ } from './constant';
 
 dotenv.config();
 
@@ -16,6 +17,6 @@ export default {
   host: process.env.DB_HOST,
   type: process.env.DB_TYPE,
   password: process.env.DB_PASS,
-  debug: process.env.NODE_ENV,
+  debug: __prod__,
   metadataProvider: TsMorphMetadataProvider,
 } as Options;
