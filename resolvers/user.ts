@@ -64,8 +64,17 @@ export class UserResolver {
 
     try {
       await em.persistAndFlush(user);
-    } catch (error) {
-      console.log(error.message);
+    } catch (err) {
+      if (err.code === "23505") {
+        return {
+          errors: [
+            {
+              field: "username",
+              message: "username already taken",
+            },
+          ],
+        };
+      }
     }
 
     return {

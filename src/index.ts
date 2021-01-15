@@ -8,13 +8,39 @@ import { PostsResolver } from "../resolvers/posts";
 import dotenv from "dotenv";
 import "reflect-metadata";
 import { UserResolver } from "../resolvers/user";
+import redis from "redis";
+import connectRedis from "connect-redis";
+import session from "express-session";
 
 dotenv.config();
 
 const main = async () => {
   const orm = await MikroORM.init(mikroConfig);
   orm.getMigrator().up();
+
   const app = express();
+
+  const RedisStore = connectRedis(session);
+
+  const redisClient = redis.createClient();
+
+  app.use(
+    session({
+      name: 'qid',
+      store: new RedisStore({
+        client: redisClient,
+        disableTTL: true,
+        disableTouch: true,
+      }),
+      cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 365 * 10,
+        httpOnly: true,
+        secure: true,
+      },
+      secret: "alksjaisuanshsaidatslkasmssak",
+      resave: false,
+    })
+  );
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
@@ -27,7 +53,7 @@ const main = async () => {
   apolloServer.applyMiddleware({ app });
 
   app.get("/", (_, res) => {
-    res.send("giselle");
+    res.send("teste");
   });
 
   app.listen(process.env.APP_PORT, () => {
